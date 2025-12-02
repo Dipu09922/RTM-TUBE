@@ -6,11 +6,37 @@ function loadCategorys() {
 
 // "category_id": "1001",
 // "category": "Music"
+function displayCategories(Categories) {
+  //  get the Container
+  const categoryContainer = document.getElementById("category-container");
+  // loop operation on Array of object
+ 
+  for (let cat of Categories) {
+    const categoryDiv = document.createElement("div");
+     // create element
+    categoryDiv.innerHTML = `
+           <button onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+          `;
+    // append the element
+    categoryContainer.append(categoryDiv);
+  }
+}
+
 function loadVideos() {
   fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
     .then((response) => response.json())
     .then((data) => displayVideos(data.videos));
 }
+
+const loadCategoryVideos=(id)=>
+{
+   const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+  //  console.log(url)
+   fetch(url)
+   .then(res=>res.json())
+   .then(data=>displayVideos(data.category))
+}
+
 // {
 //     "category_id": "1001",
 //     "video_id": "aaab",
@@ -32,13 +58,15 @@ function loadVideos() {
 
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("video-container");
+  videoContainer.innerHTML="";
 
   videos.forEach((video) => {
+    // console.log(video)
     const videoCard = document.createElement("div");
     videoCard.innerHTML = `
-        <div class="card bg-base-100 shadow-sm">
+         <div class="card bg-base-100 shadow-sm">
         <figure class="relative">
-          <img src="https://i.ibb.co/QPNzYVy/moonlight.jpg" alt="Shoes" />
+          <img class="w-full h-[150px] object-cover" src="${video.thumbnail}" alt="Shoes" />
           <span
             class="absolute bottom-2 right-2 bg-black text-white text-sm px-2 rounded-lg"
             >3hrs 56 min ago</span
@@ -52,15 +80,15 @@ const displayVideos = (videos) => {
                 class="ring-primary ring-offset-base-100 w-6 rounded-full ring-2 ring-offset-2"
               >
                 <img
-                  src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"
+                  src="${video.authors[0].profile_picture}"
                 />
               </div>
             </div>
           </div>
           <div class="intro">
             <h2 class="text-lg font-semibold">Building a Winning UX Strategy Using the Kano Model</h2>
-            <p class="text-sm font-semibold text-gray-500 flex gap-1">Dipu Das <img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=QMxOVe0B9VzG&format=png" alt=""></p>
-            <p class="text-sm font-semibold text-gray-500">91K views</p>
+            <p class="text-sm font-semibold text-gray-500 flex gap-1">${video.authors[0].profile_name} <img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=QMxOVe0B9VzG&format=png" alt=""></p>
+            <p class="text-sm font-semibold text-gray-500">${video.others.views}</p>
           </div>
         </div>
       </div>
@@ -69,20 +97,7 @@ const displayVideos = (videos) => {
   });
 };
 
-function displayCategories(c) {
-  //  get the Container
-  const categoryContainer = document.getElementById("category-container");
-  // loop operation on Array of object
-  // create element
-  for (let cat of c) {
-    const categoryDiv = document.createElement("div");
-    categoryDiv.innerHTML = `
-           <button class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
-          `;
-    // append the element
-    categoryContainer.append(categoryDiv);
-  }
-}
+
 
 loadCategorys();
-loadVideos();
+

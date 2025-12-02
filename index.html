@@ -26,14 +26,24 @@
       </nav>
     </header>
     <nav id="category-container" class="flex justify-center gap-5 py-5">
-      <div><button onclick="loadVideos();" class="btn btn-sm bg-[#FF1F3D] text-white">All</button></div>
+      <div>
+        <button
+          onclick="loadVideos();"
+          class="btn btn-sm bg-[#FF1F3D] text-white"
+        >
+          All
+        </button>
+      </div>
     </nav>
     <!-- video card -->
     <section
       class="w-11/12 mx-auto grid grid-cols-4 gap-4"
       id="video-container"
     >
-    
+      <div class="col-span-full flex justify-center items-center flex-col text-center py-20">
+        <img class="w-[150px]" src="assets/Icon.png" alt="" />
+        <h2 class="font-bold text-2xl">Oops!! Sorry, There is no content here</h2>
+      </div>
     </section>
 
     <script src="script/index.js"></script>

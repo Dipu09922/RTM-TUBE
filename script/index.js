@@ -59,6 +59,8 @@ const loadCategoryVideos=(id)=>
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("video-container");
   videoContainer.innerHTML="";
+  
+  
 
   videos.forEach((video) => {
     // console.log(video)
